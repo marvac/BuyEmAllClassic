@@ -3,13 +3,8 @@
 BuyEmAll = {}
 
 local L = BUYEMALL_LOCALS;
-
--- These are used for the text on the Max and Stack buttons. See BuyEmAll.xml.
-
 BUYEMALL_MAX = L.MAX;
 BUYEMALL_STACK = L.STACK;
-
--- It's ALIVE!!! Muahahahahhahahaa!!!!!
 
 function BuyEmAll:OnLoad()
     -- Set up confirmation dialog.
@@ -110,7 +105,7 @@ function BuyEmAll:CogsFreeBagSpace(itemID)
         local doBag = true;
 
         if (theBag > 0) then -- 0 is always the backpack.
-        local bagLink = GetInventoryItemLink("player", 19 + theBag); -- Bag #1 is in inventory slot 20.
+            local bagLink = GetInventoryItemLink("player", C_Container.ContainerIDToInventoryID(theBag));
         if (bagLink) then
             local bagSubType = GetItemFamily(bagLink);
             if (bagSubType == itemSubType) then
@@ -127,13 +122,13 @@ function BuyEmAll:CogsFreeBagSpace(itemID)
         end
 
         if (doBag) then
-            local numSlot = GetContainerNumSlots(theBag);
+            local numSlot = C_Container.GetContainerNumSlots(theBag);
             for theSlot = 1, numSlot do
-                local itemLink = GetContainerItemLink(theBag, theSlot);
+                local itemLink = C_Container.GetContainerItemLink(theBag, theSlot);
                 if not (itemLink) then
                     freeSpace = freeSpace + stackSize;
                 elseif (strfind(itemLink, "item:" .. itemID .. ":")) then
-                    local _, itemCount = GetContainerItemInfo(theBag, theSlot);
+                    local _, itemCount = C_Container.GetContainerItemInfo(theBag, theSlot);
                     freeSpace = freeSpace + stackSize - itemCount;
                 end
             end
