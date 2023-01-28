@@ -128,8 +128,8 @@ function BuyEmAll:CogsFreeBagSpace(itemID)
                 if not (itemLink) then
                     freeSpace = freeSpace + stackSize;
                 elseif (strfind(itemLink, "item:" .. itemID .. ":")) then
-                    local _, itemCount = C_Container.GetContainerItemInfo(theBag, theSlot);
-                    freeSpace = freeSpace + stackSize - itemCount;
+                    local item = C_Container.GetContainerItemInfo(theBag, theSlot);
+                    freeSpace = freeSpace + stackSize - item.stackCount;
                 end
             end
         end
